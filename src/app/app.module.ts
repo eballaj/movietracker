@@ -23,6 +23,8 @@ import {NgxYoutubePlayerModule} from 'ngx-youtube-player';
 import {MovieModule} from './movie/movie.module';
 import {StateModule} from './shared/state/state.module';
 import {ConfirmDialogComponent} from './shared/ui/confirm-dialog/confirm-dialog.component';
+import { FirestoreSettingsToken} from '@angular/fire/firestore';
+
 
 @NgModule({
   declarations: [
@@ -46,7 +48,7 @@ import {ConfirmDialogComponent} from './shared/ui/confirm-dialog/confirm-dialog.
     NgxYoutubePlayerModule,
     StateModule
   ],
-  providers: [AuthService, AngularFireAuth, FirebaseService],
+  providers: [AuthService, AngularFireAuth, FirebaseService, { provide: FirestoreSettingsToken, useValue: {}} ],
   exports: [],
   entryComponents: [
     ConfirmDialogComponent

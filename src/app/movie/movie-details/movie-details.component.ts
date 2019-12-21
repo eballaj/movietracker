@@ -101,6 +101,7 @@ export class MovieDetailsComponent implements OnInit {
   }
   checkIfExist() {
     this.authService.user$.subscribe(user => {
+      if(user){
       this.uid = user.uid;
       this.sub = this.afs.doc(`usersData/${this.uid}/watched/${this.movieId}`).valueChanges().subscribe(data => {
         if (data) {
@@ -117,6 +118,7 @@ export class MovieDetailsComponent implements OnInit {
           this.existToFavorite = true;
         }
       });
+    }
   });
   }
 }
