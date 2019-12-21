@@ -1,0 +1,35 @@
+<br/>
+<br/>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <div class="col-md-6 offset-3">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Name" formControlName="name" aria-describedby="nameHelp">
+        <small *ngIf="registerForm.get('name').invalid && registerForm.get('name').touched" id="nameHelp" class="form-text text-muted">Name not valid
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" placeholder="Username" formControlName="username" aria-describedby="usernameHelp">
+        <small *ngIf="registerForm.get('username').invalid && registerForm.get('username').touched" id="usernameHelp" class="form-text text-muted">Username not valid
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" aria-describedby="passwordHelp"
+               placeholder="password" formControlName="password">
+        <small *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched" id="passwordHelp" class="form-text text-muted">Password not valid
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+               placeholder="Enter email" formControlName="email">
+        <small *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched" id="emailHelp" class="form-text text-muted">Email not valid
+        </small>
+      </div>
+      <button type="submit" [disabled]="!registerForm.valid" class="btn btn-primary">Register</button>
+    </div>
+  </div>
+</form>

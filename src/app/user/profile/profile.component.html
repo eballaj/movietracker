@@ -1,0 +1,120 @@
+<br/>
+<br/>
+<div class="container">
+  <div class="row">
+    <div class="col-6 offset-3">
+      <div style="text-align: center;">
+        <div *ngIf="authService.user$ | async as user">
+          <img alt="User Photo" class="rounded-circle" [src]="user.photoURL?user.photoURL: '../../assets/images/NoProfile.jpg'" width="160" height="160">
+          <h3 class="text-center">{{user.displayName}}</h3>
+          <div *ngIf="authService.user$ | async as user">
+            <button *ngIf="user.isAdmin" routerLink="/admin" class="btn btn-dark">Manage Users</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <div class="row">
+    <div id="movieList" class="col-12 col-md-8 offset-md-2">
+      <mat-tab-group mat-stretch-tabs>
+        <mat-tab label="Watched">
+          <mat-list role="list">
+            <app-spinner *ngIf="!firebaseService.watchedMovies$"></app-spinner>
+            <div *ngIf="firebaseService.watchedMovies$ | async as movies">
+              <mat-list-item *ngFor="let movie of movies" role="listitem">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-1 col-1">
+                      <a class="text-decoration-none" [routerLink]="['/movieDetails', movie.movieId]">
+                        <img width="47" height="47" alt="movie poster" class="rounded-circle"
+                             [src]="movie.moviePosterUrl?'https://image.tmdb.org/t/p/w185/' + movie.moviePosterUrl: '../../../assets/images/not.jpg'">
+                      </a>
+                    </div>
+                    <div class="col-md-8 offset-md-1 col-7 offset-1">
+                      {{movie.movieTitle}}
+                    </div>
+                    <div class="col-md-1 col-1">
+                        <button class="btn btn-transparent float-right"
+                                (click)="firebaseService.moveItem(movie, 'favorite'); snackBarOpen('Favorite')">
+                          <mat-icon>favorite</mat-icon>
+                        </button>
+                    </div>
+                    <div class="col-md-1 col-1">
+                      <button class="btn btn-transparent float-right"
+                              (click)="firebaseService.deleteMovie(movie.movieId, 'watched'); snackBarOpen()">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </mat-list-item>
+            </div>
+          </mat-list>
+        </mat-tab>
+        <mat-tab label="To Watch">
+          <mat-list role="list">
+            <div *ngIf="firebaseService.toWatchMovies$ | async as movies">
+              <mat-list-item *ngFor="let movie of movies" role="listitem">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-1 col-1">
+                      <a class="text-decoration-none" [routerLink]="['/movieDetails', movie.movieId]">
+                        <img width="47" height="47" alt="movie poster" class="rounded-circle"
+                             [src]="'https://image.tmdb.org/t/p/w185/' + movie.moviePosterUrl">
+                      </a>
+                    </div>
+                    <div class="col-md-7 offset-md-1 col-7 offset-1">
+                      {{movie.movieTitle}}
+                    </div>
+                    <div class="col-md-1 col-1">
+                        <button class="btn btn-transparent float-right"
+                                (click)="firebaseService.moveItem(movie, 'watched', 'toWatch'); snackBarOpen('Watched')">
+                          <mat-icon>visibility</mat-icon>
+                        </button>
+                    </div>
+                    <div class="col-md-1 col-1">
+                      <button class="btn btn-transparent float-right"
+                              (click)="firebaseService.deleteMovie(movie.movieId, 'toWatch'); snackBarOpen()">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </mat-list-item>
+            </div>
+          </mat-list>
+        </mat-tab>
+        <mat-tab label="Favorite">
+          <mat-list role="list">
+            <div *ngIf="firebaseService.favoriteMovies$ | async as movies">
+              <mat-list-item *ngFor="let movie of movies" role="listitem">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-1 col-1">
+                      <a class="text-decoration-none" [routerLink]="['/movieDetails', movie.movieId]">
+                        <img width="47" height="47" alt="movie poster" class="rounded-circle"
+                             [src]="'https://image.tmdb.org/t/p/w185/' + movie.moviePosterUrl">
+                      </a>
+                    </div>
+                    <div class="col-md-7 col-7 offset-md-1 offset-1">
+                      {{movie.movieTitle}}
+                    </div>
+                    <div class="col-md-1 col-1 offset-md-1 offset-1">
+                      <button class="btn btn-transparent"
+                              (click)="firebaseService.deleteMovie(movie.movieId, 'favorite'); snackBarOpen()">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </mat-list-item>
+            </div>
+          </mat-list>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

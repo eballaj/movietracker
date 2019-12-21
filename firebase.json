@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/MovieTrackerPoject",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

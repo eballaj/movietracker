@@ -1,0 +1,67 @@
+img{
+  width: 80%;
+}
+a:hover img{
+  filter: brightness(50%);
+}
+a{
+  cursor: pointer;
+}
+
+.containerImg {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.containerImg .btnAdd {
+  position: absolute;
+  top: 5%;
+  left: 84%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-size: 18px;
+  padding: 2px 2px 0px 2px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.containerImg .btnAdd:hover {
+  background-color: black;
+}
+@media only screen and (max-width: 414px) {
+  .containerImg .btnAdd{
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+  img{
+    width: 100%;
+  }
+  #pagination{
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .col-3{
+    width: 100%;
+    padding: 0 0;
+  }
+  .col-2{
+    padding: 0 3px;
+  }
+  .row{
+    margin-right: 0;
+    margin-left: 0;
+  }
+  #pagination button{
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+}

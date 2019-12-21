@@ -1,0 +1,36 @@
+.mat-list-item{
+  margin-bottom: 5px
+}
+a:hover img{
+  filter: brightness(50%);
+}
+app-profile .mat-tab-labels {
+  color: #0e1116;
+}
+app-profile .mat-tab-labels{
+  background-color: #0e1116;
+}
+::ng-deep .mat-ink-bar {
+  background-color: #0e1116 !important;
+}
+
+@media only screen and (max-width: 414px){
+  #movieList.col-12{
+    padding-left: 0;
+  }
+  .container{
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .col-12{
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .mat-tab-header{
+    width: 100%;
+  }
+  .mat-tab-header-pagination-chevron{
+    width: 50%;
+  }
+}

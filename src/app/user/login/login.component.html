@@ -1,0 +1,31 @@
+<!--<div class="container">
+  <div class="col-md-6 offset-3">
+    <h6 *ngIf="result==='wrong'">Wrong password</h6>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" placeholder="Username" formControlName="username" aria-describedby="usernameHelp">
+        <small *ngIf="loginForm.get('username').invalid && loginForm.get('username').touched" id="usernameHelp" class="form-text text-muted">Username not valid
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password"
+               placeholder="password" formControlName="password" aria-describedby="passwordHelp">
+        <small *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched" id="passwordHelp" class="form-text text-muted">Password not valid
+        </small>
+      </div>
+      <button type="submit" [disabled]="!loginForm.valid" class="btn btn-block btn-primary">Log In</button>
+
+    </form>
+  </div>
+  <br />-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 col-12">
+      <button class="btn btn-block btn-primary float-right"  (click)="authService.googleSignin()">
+        LogIn With Google
+      </button>
+    </div>
+  </div>
+</div>

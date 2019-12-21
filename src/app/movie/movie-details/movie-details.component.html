@@ -1,0 +1,90 @@
+<br/>
+<app-spinner *ngIf="showSpinner"></app-spinner>
+<div *ngIf="!showSpinner" class="container">
+<!--  <div class="container">-->
+<!--   <img alt="backdrop"  class="align-content-md-center icon-ic_blur_on_black_24dp" width="100%" src="{{'https://image.tmdb.org/t/p/w1280/'+movieData?.backdrop_path}}">-->
+    <div class="row">
+      <div class="col-md-4 col-12">
+        <img alt="Movie Poster" id="imgDetails" class="rounded img-fluid"
+             src="{{movieData.poster_path?'https://image.tmdb.org/t/p/w500/'+movieData?.poster_path: '../../../assets/images/not.jpg'}}">
+      </div>
+      <div class="col-md-8 col-12">
+        <h2>{{ movieData?.title}}</h2>
+        <div *ngIf="authService.user$ | async as user">
+          <div class="row">
+          <div class="col-12 col-md-7 offset-md-5">
+            <button class="btn btn-transparent" [ngStyle]="{'color': existToWatched ? 'green' : 'black' }" (click)="addWatched(user.uid); snackBarOpen('Watched')">
+              <mat-icon>visibility</mat-icon>
+              Watched
+            </button>
+            <button class="btn btn-transparent" [ngStyle]="{'color': existToWatch ? 'green' : 'black' }" (click)="addToWatch(user.uid); snackBarOpen('ToWatch')">
+              <mat-icon>watch_later</mat-icon>
+              To Watch
+            </button>
+            <button class="btn btn-transparent" [ngStyle]="{'color': existToFavorite ? 'green' : 'black' }" (click)="addFavorite(user.uid); snackBarOpen('Favorite')">
+              <mat-icon>favorite</mat-icon>
+              Favorite
+            </button>
+          </div>
+          </div>
+        </div>
+        <br/>
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Genre: </strong>
+            <div class="d-inline" *ngFor="let genre of genresArray">{{genre?.name}},</div>
+          </li>
+          <li class="list-group-item"><strong>Released: </strong>{{movieData?.release_date}}</li>
+          <li class="list-group-item"><strong>Runtime: </strong>{{movieData?.runtime}} min</li>
+          <li class="list-group-item"><strong>Rated: </strong>{{movieData?.vote_average}}/10</li>
+          <li class="list-group-item"><strong>Cast: </strong>
+            <div class="d-inline" *ngFor="let actor of castArray">{{actor?.name}},</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  <div class="row">
+    <div class="col-md-12 col-12">
+      <h3>Overview</h3>
+      <p>{{movieData?.overview}}</p>
+    </div>
+  </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="row">
+    <div class="col-md-8 col-12 offset-md-2 offset-0 ">
+      <mat-tab-group mat-stretch-tabs>
+        <mat-tab label="Trailer">
+          <div class="text-center" *ngIf="!videoUrl"><br /><strong> No video found</strong></div>
+          <div *ngIf="videoUrl">
+            <iframe
+              width="100%"
+              height="360px"
+              [src]="videoUrl"
+              frameborder="0"
+              allowfullscreen
+              include
+              >
+            </iframe>
+         </div>
+        </mat-tab>
+        <mat-tab label="Similar Movies">
+          <app-spinner *ngIf="showSpinner"></app-spinner>
+          <div *ngIf="!showSpinner && arraySimilarMovies" class="container">
+            <div class="row">
+              <div class="col-md-3 col-6" *ngFor="let movie of arraySimilarMovies">
+                <div class="text-center rounded">
+                  <a (click)="showDetails(movie.id)"><img alt="Movie Poster"
+                                     src="{{movie.poster_path?'https://image.tmdb.org/t/p/w342'+movie.poster_path: '../../../assets/images/not.jpg'}}"
+                                     class="rounded img-fluid"></a>
+                  <h5>{{movie.title}}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center" *ngIf="showError"><br /><strong> No result found</strong></div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+<!--  </div>-->
+</div>

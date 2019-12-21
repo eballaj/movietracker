@@ -1,0 +1,36 @@
+<mat-toolbar color="primary" class="example-toolbar">
+  <button id="menuBtn" mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <a id="btnTitle" class="btn btn-link text-decoration-none" routerLink="nowPlaying/1"><h1 class="example-app-name">Movie Tracker</h1></a>
+  <span style="flex: 1 1 auto;"></span>
+  <label>
+    <input id="searchInput" type="text" style="margin-right: 15px; margin-top: 4%" class="input-group-text" placeholder="Search Movie" (keyup.enter)="searchMovie(searchInput.value); searchInput.value=''" #searchInput>
+  </label>
+  <mat-icon id="searchIcon">search</mat-icon>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav opened mode="side" #sidenav [opened]="(screenWidth  > 500)"
+               [mode]="(screenWidth > 500) ? 'side' : 'over'">
+    <br />
+    <br />
+    <mat-nav-list>
+      <a class="text-white" mat-list-item routerLink="nowPlaying/1" (click)="screenWidth < 500?sidenav.toggle(): 1==1" >Now Playing</a>
+      <a class="text-white" mat-list-item routerLink="profile" (click)="screenWidth < 500?sidenav.toggle():1==1">Profile</a>
+
+      <div *ngIf="authService.user$ | async;  else guest">
+        <a  class="text-white" mat-list-item (click)="authService.signOut()">Log Out</a>
+      </div>
+      <ng-template #guest>
+        <a  class="text-white" mat-list-item routerLink="login" (click)="screenWidth < 500?sidenav.toggle():1==1">Log In</a>
+        <!--<a  class="text-white" mat-list-item routerLink="register">Register</a>-->
+      </ng-template>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <br />
+    <br />
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

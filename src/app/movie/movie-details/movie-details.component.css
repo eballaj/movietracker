@@ -1,0 +1,35 @@
+#imgDetails{
+  width: 100%;
+}
+a:hover img{
+  filter: brightness(50%);
+}
+
+a{
+  cursor: pointer;
+}
+::ng-deep .mat-ink-bar {
+  background-color: #0e1116 !important;
+}
+::ng-deep .mat-tab-label {
+  font-size: large;
+  color: black;
+}
+::ng-deep .mat-tab-label.mat-tab-label-active{
+  font-size: large;
+  color: black;
+}
+@media only screen and (max-width: 414px) {
+  .col-12{
+    padding-left: 0;
+    padding-right: 0;
+  }
+  #imgDetails{
+    width: 100%;
+  }
+  .col-12{
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+  }
+}

@@ -1,0 +1,11 @@
+<br />
+<div class="container">
+  <div class="col-md-6 offset-md-3 col-12 offset-0">
+    <ul class="list-group" *ngFor="let user of usersArray$" style="padding-bottom: 20px;">
+      <li class="list-group-item list-group-item-dark ">{{user.displayName}}</li>
+      <li class="list-group-item list-group-item-dark ">{{user.email}}</li>
+      <button *ngIf="!user.isAdmin" class="btn btn-danger" (click)="openDialog(user.uid)">Delete</button>
+    </ul>
+
+  </div>
+</div>

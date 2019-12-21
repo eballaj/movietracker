@@ -1,0 +1,58 @@
+.mat-sidenav-container{
+  height: 100%;
+  top: inherit;
+}
+
+.mat-sidenav, .mat-sidenav-content{
+  padding: 15px;
+}
+
+.mat-sidenav {
+  background-color: #0e1116;
+  width: 200px;
+}
+.mat-sidenav-content{
+  background-color: white;
+}
+
+.example-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background-color: #0e1116;
+  width: 100%;
+}
+
+a {
+  color: white;
+}
+.example-app-name{
+  color: white;
+}
+.mrg_top{
+  margin-top: 50px;
+}
+
+@media only screen and (max-width: 414px) {
+  .mat-sidenav.modal-open
+  #menuBtn {
+    width: 30px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #btnTitle {
+    padding-right: 15px;
+    padding-left: 0;
+  }
+  #searchInput{
+    width: 130px;
+  }
+  #searchIcon{
+    width: 30px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

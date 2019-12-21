@@ -1,0 +1,43 @@
+<br/>
+<br/>
+<app-spinner *ngIf="showSpinner"></app-spinner>
+<div class="container" *ngIf="!showSpinner">
+  <div id="movies" class="row">
+    <div class="col-md-3 col-6" *ngFor="let movie of arrayMovie">
+      <div class="well text-center rounded">
+        <br/>
+        <div class="containerImg">
+        <a (click)="showDetails(movie.id)"><img alt="Movie Poster"
+                                              src="{{movie.poster_path?'https://image.tmdb.org/t/p/w342'+movie.poster_path: '../../../assets/images/not.jpg'}}"
+                                              class="rounded img-fluid"></a>
+          <button data-toggle="tooltip" data-placement="bottom" title="To Watch"
+                  *ngIf="authService.user$ | async as user" (click)="addToWatch(user.uid, movie); snackBarOpen('ToWatch')"
+                  class="btnAdd"><mat-icon>watch_later</mat-icon></button>
+        </div>
+        <h5>{{movie.title}}</h5>
+      </div>
+    </div>
+  </div>
+  <br />
+  <br />
+  <div id="pagination" class="row">
+    <div class="col-md-3 col-3 offset-md-1">
+      <div class="btn-group btn-block">
+        <button [disabled]="isDisabled()" class="btn btn-block btn-dark" (click)="previewsPage()">Previews</button>
+      </div>
+    </div>
+    <div class="col-md-1 col-2">
+        <button [disabled]="isDisabled()" class="btn btn-block btn-dark" (click)="firsPage()">1</button>
+    </div>
+    <div class="col-md-2 col-2">
+      <div class="text-center">{{page}}</div>
+    </div>
+    <div class="col-md-1 col-2">
+      <button [disabled]="isNextDisabled()" class="btn btn-block btn-dark " (click)="lastPage()">{{totalPage}}</button>
+    </div>
+    <div class="col-md-3 col-3">
+      <button [disabled]="isNextDisabled()" class="btn btn-block btn-dark" (click)="nextPage()">Next</button>
+    </div>
+  </div>
+</div>
+<br />

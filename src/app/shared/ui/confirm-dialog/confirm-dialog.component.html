@@ -1,0 +1,15 @@
+
+  <div class="text-center" mat-dialog-content>
+    <strong>{{message}}</strong>
+  </div>
+  <div class="container" mat-dialog-actions>
+    <div class="row">
+      <div class="col-md-5 col-5">
+        <button mat-button class="btn btn-secondary w-100" (click)="onNoClick()">No</button>
+      </div>
+      <div class="col-md-5 col-5 offset-md-2 offset-2">
+        <button mat-button class="btn btn-danger w-100 text-center" [mat-dialog-close]="true" cdkFocusInitial>Delete</button>
+      </div>
+    </div>
+  </div>
+
