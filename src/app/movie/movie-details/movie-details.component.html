@@ -6,28 +6,32 @@
     <div class="row">
       <div class="col-md-4 col-12">
         <img alt="Movie Poster" id="imgDetails" class="rounded img-fluid"
-             src="{{movieData.poster_path?'https://image.tmdb.org/t/p/w500/'+movieData?.poster_path: '../../../assets/images/not.jpg'}}">
+             src="{{movieData.poster_path?'https://image.tmdb.org/t/p/w342/'+movieData?.poster_path: '../../../assets/images/not.jpg'}}">
       </div>
       <div class="col-md-8 col-12">
+        <div class="d-md-inline-flex">
+
         <h2>{{ movieData?.title}}</h2>
         <div *ngIf="authService.user$ | async as user">
           <div class="row">
-          <div class="col-12 col-md-7 offset-md-5">
-            <button class="btn btn-transparent" [ngStyle]="{'color': existToWatched ? 'green' : 'black' }" (click)="addWatched(user.uid); snackBarOpen('Watched')">
-              <mat-icon>visibility</mat-icon>
-              Watched
-            </button>
-            <button class="btn btn-transparent" [ngStyle]="{'color': existToWatch ? 'green' : 'black' }" (click)="addToWatch(user.uid); snackBarOpen('ToWatch')">
-              <mat-icon>watch_later</mat-icon>
-              To Watch
-            </button>
-            <button class="btn btn-transparent" [ngStyle]="{'color': existToFavorite ? 'green' : 'black' }" (click)="addFavorite(user.uid); snackBarOpen('Favorite')">
-              <mat-icon>favorite</mat-icon>
-              Favorite
-            </button>
-          </div>
+            <div class="col-12 col-md-7 offset-md-5 d-flex">
+              <button class="btn btn-transparent d-flex pl-0" [ngStyle]="{'color': existToWatched ? 'green' : 'black' }" (click)="addWatched(user.uid)">
+                <mat-icon style="margin-top: 3px;">visibility</mat-icon>
+                <span>Watched</span>
+              </button>
+              <button class="btn btn-transparent d-flex" [ngStyle]="{'color': existToWatch ? 'green' : 'black' }" (click)="addToWatch(user.uid)">
+                <mat-icon style="margin-top: 3px;">watch_later</mat-icon>
+                ToWatch
+              </button>
+              <button class="btn btn-transparent d-flex" [ngStyle]="{'color': existToFavorite ? 'green' : 'black' }" (click)="addFavorite(user.uid)">
+                <mat-icon style="margin-top: 3px;">favorite</mat-icon>
+                Favorite
+              </button>
+            </div>
           </div>
         </div>
+        </div>
+        <br/>
         <br/>
         <ul class="list-group">
           <li class="list-group-item"><strong>Genre: </strong>
@@ -44,6 +48,7 @@
     </div>
   <div class="row">
     <div class="col-md-12 col-12">
+      <br/>
       <h3>Overview</h3>
       <p>{{movieData?.overview}}</p>
     </div>

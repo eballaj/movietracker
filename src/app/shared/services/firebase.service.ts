@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection} from '@angular/fire/firestore';
-import {UserData} from '../../models/usersData';
-import {Movie} from '../../models/movie';
-import {User} from '../../models/user';
-import {AuthService} from './auth.service';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { UserData } from '../../models/usersData';
+import { Movie } from '../../models/movie';
+import { User } from '../../models/user';
+import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -22,49 +22,66 @@ export class FirebaseService {
 
   initData() {
     this.authService.user$.subscribe(user => {
-        if (user) {
-          this.userId = user.uid;
-          this.favoriteMovies$ = this.afs.collection(`usersData/${this.userId}/favorite`).valueChanges();
-          this.watchedMovies$ = this.afs.collection(`usersData/${this.userId}/watched`).valueChanges();
-          this.toWatchMovies$ = this.afs.collection(`usersData/${this.userId}/toWatch`).valueChanges();
-        }
-      },
+      if (user) {
+        this.userId = user.uid;
+        this.favoriteMovies$ = this.afs.collection(`usersData/${this.userId}/favorite`).valueChanges();
+        this.watchedMovies$ = this.afs.collection(`usersData/${this.userId}/watched`).valueChanges();
+        this.toWatchMovies$ = this.afs.collection(`usersData/${this.userId}/toWatch`).valueChanges();
+      }
+    },
       error => {
         console.log(error);
       });
   }
 
-  setFavorite(userId, movie) {
+  setFavorite(userId, movie, alreadyExists) {
     const userRef: AngularFirestoreDocument<UserData> = this.afs.doc(`usersData/${userId}/favorite/${movie.id}`);
 
-    const userData: UserData = {
-      movieId: movie.id,
-      movieTitle: movie.title,
-      moviePosterUrl: movie.poster_path
-    };
-    return userRef.set(userData, {merge: true});
+    if (!alreadyExists) {
+      const userData: UserData = {
+        movieId: movie.id,
+        movieTitle: movie.title,
+        moviePosterUrl: movie.poster_path
+      };
+      return userRef.set(userData, { merge: true });
+    }
+    else {
+      userRef.delete().then(() => { })
+        .catch(error => console.log(error));
+    }
   }
 
-  setToWatch(userId, movie) {
+  setToWatch(userId, movie, alreadyExists) {
     const userRef: AngularFirestoreDocument<UserData> = this.afs.doc(`usersData/${userId}/toWatch/${movie.id}`);
-
-    const userData: UserData = {
-      movieId: movie.id,
-      movieTitle: movie.title,
-      moviePosterUrl: movie.poster_path
-    };
-    return userRef.set(userData, {merge: true});
+    if (!alreadyExists) {
+      const userData: UserData = {
+        movieId: movie.id,
+        movieTitle: movie.title,
+        moviePosterUrl: movie.poster_path
+      };
+      return userRef.set(userData, { merge: true });
+    }
+    else {
+      userRef.delete().then(() => { })
+        .catch(error => console.log(error));
+    }
   }
 
-  setWatched(userId, movie) {
+  setWatched(userId, movie, alreadyExists) {
     const userRef: AngularFirestoreDocument<UserData> = this.afs.doc(`usersData/${userId}/watched/${movie.id}`);
+    if (!alreadyExists) {
+      const userData: UserData = {
+        movieId: movie.id,
+        movieTitle: movie.title,
+        moviePosterUrl: movie.poster_path
+      };
+      return userRef.set(userData, { merge: true });
+    }
+    else {
+      userRef.delete().then(() => { })
+        .catch(error => console.log(error));
+    }
 
-    const userData: UserData = {
-      movieId: movie.id,
-      movieTitle: movie.title,
-      moviePosterUrl: movie.poster_path
-    };
-    return userRef.set(userData, {merge: true});
   }
 
   addUser(users) {
@@ -93,21 +110,21 @@ export class FirebaseService {
       movieTitle: movie.movieTitle,
       moviePosterUrl: movie.moviePosterUrl
     };
-    userRef.set(userData, {merge: true});
+    userRef.set(userData, { merge: true });
     if (removeFrom) {
       this.deleteMovie(movie.movieId, removeFrom);
     }
   }
   getAllUsers() {
-   // return  this.afs.collection(`users`).valueChanges();
-      this.users = this.afs.collection('users').snapshotChanges().pipe(map(changes => {
-          return changes.map(a => {
-            const data = a.payload.doc.data() as User;
-            data.uid = a.payload.doc.id;
-            return data;
-          });
-        }));
-      return this.users;
+    // return  this.afs.collection(`users`).valueChanges();
+    this.users = this.afs.collection('users').snapshotChanges().pipe(map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as User;
+        data.uid = a.payload.doc.id;
+        return data;
+      });
+    }));
+    return this.users;
   }
   deleteUser(uid) {
     this.afs.doc(`users/${uid}`).delete();

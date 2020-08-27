@@ -40,7 +40,7 @@ export class MovieDetailsComponent implements OnInit {
               public afs: AngularFirestore,
               private fbService: FirebaseService,
               private activatedRoute: ActivatedRoute,
-              private authService: AuthService,
+              public authService: AuthService,
               private snackBar: MatSnackBar,
               private domSanitizer: DomSanitizer,
               private route: Router) {
@@ -51,7 +51,7 @@ export class MovieDetailsComponent implements OnInit {
     this.sub = this.activatedRoute.params.subscribe(params => {
       this.movieId = +params.id;
     });
-    // check if movie exist if any list
+    // check if movie exist in any list
     this.checkIfExist();
     // get movie details
     this.movieService.getMovieData(this.movieId).subscribe((data) => {
@@ -76,23 +76,28 @@ export class MovieDetailsComponent implements OnInit {
     });
   }
 
-  snackBarOpen(list) {
-    this.snackBar.open('Added To ' + list, '', {
+  snackBarOpen(list, alreadyExists, title) {
+    this.snackBar.open(`${alreadyExists? `Removed '${title}' from ` : `Added '${title}' To `} ${list}`, '', {
       duration: 2000,
       horizontalPosition: 'end'
     });
   }
 
   addFavorite(userId) {
-    this.fbService.setFavorite(userId, this.movieData);
+    this.fbService.setFavorite(userId, this.movieData, this.existToFavorite);
+    this.snackBarOpen("Favorite", this.existToFavorite, this.movieData.title);
+
   }
 
   addWatched(userId) {
-    this.fbService.setWatched(userId, this.movieData);
+    this.fbService.setWatched(userId, this.movieData, this.existToWatched);
+    this.snackBarOpen("Watched", this.existToWatched, this.movieData.title);
   }
 
   addToWatch(userId) {
-    this.fbService.setToWatch(userId, this.movieData);
+    this.fbService.setToWatch(userId, this.movieData, this.existToWatch);
+    this.snackBarOpen("To Watch", this.existToWatch, this.movieData.title);
+
   }
 
   showDetails(id) {
@@ -102,22 +107,16 @@ export class MovieDetailsComponent implements OnInit {
   checkIfExist() {
     this.authService.user$.subscribe(user => {
       if(user){
-      this.uid = user.uid;
-      this.sub = this.afs.doc(`usersData/${this.uid}/watched/${this.movieId}`).valueChanges().subscribe(data => {
-        if (data) {
-          this.existToWatched = true;
-        }
-    });
-      this.sub = this.afs.doc(`usersData/${this.uid}/toWatch/${this.movieId}`).valueChanges().subscribe(data => {
-        if (data) {
-          this.existToWatch = true;
-        }
-      });
-      this.sub = this.afs.doc(`usersData/${this.uid}/favorite/${this.movieId}`).valueChanges().subscribe(data => {
-        if (data) {
-          this.existToFavorite = true;
-        }
-      });
+        this.uid = user.uid;
+        this.sub = this.afs.doc(`usersData/${this.uid}/watched/${this.movieId}`).valueChanges().subscribe(data => {
+          data? this.existToWatched = true: this.existToWatched = false;
+        });
+        this.sub = this.afs.doc(`usersData/${this.uid}/toWatch/${this.movieId}`).valueChanges().subscribe(data => {
+          data? this.existToWatch = true : this.existToWatch = false;
+        });
+        this.sub = this.afs.doc(`usersData/${this.uid}/favorite/${this.movieId}`).valueChanges().subscribe(data => {
+          data? this.existToFavorite = true: this.existToFavorite = false;
+        });
     }
   });
   }

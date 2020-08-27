@@ -8,7 +8,7 @@
         <br/>
         <div class="containerImg">
         <a (click)="showDetails(movie.id)"><img alt="Movie Poster"
-                                              src="{{movie.poster_path?'https://image.tmdb.org/t/p/w342'+movie.poster_path: '../../../assets/images/not.jpg'}}"
+                                              src="{{movie.poster_path?'https://image.tmdb.org/t/p/w185'+movie.poster_path: '../../../assets/images/not.jpg'}}"
                                               class="rounded img-fluid"></a>
           <button data-toggle="tooltip" data-placement="bottom" title="To Watch"
                   *ngIf="authService.user$ | async as user" (click)="addToWatch(user.uid, movie); snackBarOpen('ToWatch')"

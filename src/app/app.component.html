@@ -7,7 +7,7 @@
   <label>
     <input id="searchInput" type="text" style="margin-right: 15px; margin-top: 4%" class="input-group-text" placeholder="Search Movie" (keyup.enter)="searchMovie(searchInput.value); searchInput.value=''" #searchInput>
   </label>
-  <mat-icon id="searchIcon">search</mat-icon>
+  <mat-icon class="searchButton" (click)="searchMovie(searchInput.value)" id="searchIcon">search</mat-icon>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav opened mode="side" #sidenav [opened]="(screenWidth  > 500)"

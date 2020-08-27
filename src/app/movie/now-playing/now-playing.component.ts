@@ -26,7 +26,7 @@ export class NowPlayingComponent implements OnInit {
               private movieService: MovieDataService,
               private activatedRoute: ActivatedRoute,
               private snackBar: MatSnackBar,
-              private authService: AuthService,
+              public authService: AuthService,
               private firebaseService: FirebaseService
             ) {}
 
