@@ -51,7 +51,7 @@ export class FirebaseService {
     }
   }
 
-  setToWatch(userId, movie, alreadyExists) {
+  setToWatch(userId: string, movie, alreadyExists?: boolean) {
     const userRef: AngularFirestoreDocument<UserData> = this.afs.doc(`usersData/${userId}/toWatch/${movie.id}`);
     if (!alreadyExists) {
       const userData: UserData = {
